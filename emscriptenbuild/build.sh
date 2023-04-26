@@ -41,10 +41,12 @@ run_init() {
     message "Build mode -> $BUILD_TYPE"
     message "initializing"
     # Reset in case we've done an '-async' build
-    cp ../libgit2patchedfiles/src/transports/emscriptenhttp-async.c ../libgit2/src/libgit2/transports/emscriptenhttp.c
+    cp $CMD_PWD/libgit2patchedfiles/src/transports/emscriptenhttp-async.c $CMD_PWD/libgit2/src/libgit2/transports/emscriptenhttp.c
 
     # Before building, remove any ../libgit2/src/transports/emscriptenhttp.c left from running setup.sh 
-    [ -f "../libgit2/src/libgit2/transports/emscriptenhttp-async.c" ] && rm ../libgit2/src/libgit2/transports/emscriptenhttp-async.c
+    if [ -f "$CMD_PWD/libgit2/src/libgit2/transports/emscriptenhttp-async.c" ]; then
+        rm $CMD_PWD/libgit2/src/libgit2/transports/emscriptenhttp-async.c
+    fi
 }
 
 # Currently don't need support sync build.
@@ -127,6 +129,7 @@ run_wechat() {
     run_wechat_adapter $build_dir
 
     if $BUILD_COPY; then
+        message "copy to $BUILD_COPY_PATH"
         cp "$build_dir/examples/lg2.js" "$BUILD_COPY_PATH/mp"
         cp "$build_dir/examples/lg2.wasm.br" "$BUILD_COPY_PATH/mp"
     fi
@@ -148,11 +151,13 @@ run_web() {
     run_make $build_dir
 
     if $BUILD_COPY; then
+        message "copy to $BUILD_COPY_PATH"
         cp "$build_dir/examples/lg2.js" "$BUILD_COPY_PATH/web"
         cp "$build_dir/examples/lg2.wasm" "$BUILD_COPY_PATH/web"
     fi
 }
 
+run_init
 
 run_wechat
 run_web
