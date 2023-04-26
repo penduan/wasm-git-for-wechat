@@ -1,0 +1,33 @@
+{
+    "name": "wasm-git",
+    "version": "0.0.9",
+    "author": {
+        "name": "Peter Salomonsen",
+        "url": "https://petersalomonsen.com"
+    },
+    "repository": {
+        "url": "https://github.com/petersalomonsen/wasm-git"
+    },
+    "files": [
+        "lg2.js",
+        "lg2.wasm",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "mocha test/**/*.spec.js",
+        "test-browser": "karma start --single-run --browsers ChromeHeadless karma.conf.js",
+        "test-browser-watch": "karma start --browsers Chrome karma.conf.js",
+        "test-browser-async": "karma start --single-run --browsers ChromeHeadless karma.conf-async.js",
+        "patch-version": "npm --no-git-tag-version version patch",
+        "build:example": "cd emscriptenbuild && emmake make lg2 && sh ./handler.sh"
+    },
+    "devDependencies": {
+        "cgi": "^0.3.1",
+        "chai": "^4.3.6",
+        "karma": "^6.3.16",
+        "karma-chai": "^0.1.0",
+        "karma-chrome-launcher": "^3.1.1",
+        "karma-mocha": "^2.0.1",
+        "mocha": "^9.2.2"
+    }
+}

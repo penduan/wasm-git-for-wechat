@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "cgi": "^0.3.1"
+  },
+  "devDependencies": {
+    "cgi": "^0.3.1"
+  }
+}
