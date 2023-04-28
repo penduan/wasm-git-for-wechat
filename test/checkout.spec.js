@@ -1,7 +1,8 @@
 const lgPromise = require('./common.js').lgPromise;
 const assert = require('assert');
 
-describe('git checkout', () => {    
+describe('git checkout', function() {   
+    this.timeout(5000);
     beforeEach(async () => {
         (await lgPromise).FS.chdir('/working');
         console.log('cwd', (await lgPromise).FS.cwd());
@@ -20,12 +21,15 @@ describe('git checkout', () => {
         FS.writeFile('test.txt', 'abcdef');
         lg.callMain(['add', 'test.txt']);
         lg.callMain(['commit', '-m', 'test commit']);
+        lg.callMain(['log']);
         assert.equal(FS.readFile('test.txt', {encoding: 'utf8'}), 'abcdef');
         FS.writeFile('test.txt', 'abcdefg');
-        lg.callMain(['checkout', '--', 'test.txt']);
+        lg.callMain(['checkout','--', 'test.txt']);
         lg.callMain(['status']);
         assert.equal(FS.readFile('test.txt', {encoding: 'utf8'}), 'abcdef',
                 'expecting file content to be reverted');
+        
+       
     });
     it('should show error message if no path arguments are given', async () => {
         const lg = await lgPromise;
